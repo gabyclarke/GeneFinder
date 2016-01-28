@@ -2,7 +2,7 @@
 """
 YOUR HEADER COMMENT HERE
 
-@author: YOUR NAME HERE
+@author: Gaby Clarke
 
 """
 
@@ -31,6 +31,14 @@ def get_complement(nucleotide):
     'G'
     """
     # TODO: implement this
+    if nucleotide == 'A':
+        return 'T'
+    elif nucleotide == 'T':
+        return 'A'
+    elif nucleotide == 'C':
+        return 'G'
+    else: # G
+        return 'C'
     pass
 
 
@@ -46,7 +54,14 @@ def get_reverse_complement(dna):
     'TGAACGCGG'
     """
     # TODO: implement this
+    reverse = dna[::-1]
+    init = ''
+    for i in range(len(dna)):
+        init = init + get_complement(reverse(i))
+    return init
     pass
+
+    # STRINGS DON'T HAVE INDICES
 
 
 def rest_of_ORF(dna):
