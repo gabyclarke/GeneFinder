@@ -55,13 +55,12 @@ def get_reverse_complement(dna):
     """
     # TODO: implement this
     reverse = dna[::-1]
-    init = ''
-    for i in range(len(dna)):
-        init = init + get_complement(reverse(i))
-    return init
+    reverse_complement = ''
+    for i in reverse:
+        reverse_complement = reverse_complement + get_complement(i)
+    return reverse_complement
     pass
 
-    # STRINGS DON'T HAVE INDICES
 
 
 def rest_of_ORF(dna):
