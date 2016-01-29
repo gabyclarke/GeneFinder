@@ -120,6 +120,12 @@ def find_all_ORFs_oneframe(dna):
     ['ATGCATGAATGTAGA', 'ATGTGCCC']
     """
     # TODO: implement this
+    orf = ''
+    for i in dna:
+        if dna[i] == 'A' and dna[i+1] == 'T' and dna[i+2] == 'G':
+            orf = orf + dna[i]
+            print orf
+
 
     pass
 
@@ -204,5 +210,5 @@ def gene_finder(dna):
 
 if __name__ == "__main__":
     import doctest
-    doctest.testmod()
-    # doctest.run_docstring_examples(rest_of_ORF, globals())
+    # doctest.testmod()
+    doctest.run_docstring_examples(find_all_ORFs_oneframe, globals())
