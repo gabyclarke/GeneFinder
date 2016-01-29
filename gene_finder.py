@@ -56,10 +56,25 @@ def get_reverse_complement(dna):
     # TODO: implement this
     reverse = dna[::-1]
     reverse_complement = ''
+
     for i in reverse:
         reverse_complement = reverse_complement + get_complement(i)
     return reverse_complement
     pass
+
+
+def triples(dna):
+    """ Takes a DNA sequence and breaks it into triples.
+
+        dna: a DNA sequence
+        returns: an array of strings of triples
+    >>> triples("ATGTGAA")
+    ['ATG', 'TGA', 'A']
+    >>> triples("ATGAAATGA")
+    ['ATG', 'AAA', 'TGA']
+    """
+
+    return [dna[i:i + 3] for i in range(0, len(dna), 3)]
 
 
 
@@ -77,6 +92,17 @@ def rest_of_ORF(dna):
     'ATGAGA'
     """
     # TODO: implement this
+
+    divided = triples(dna)
+    rest = ''
+
+    for i in divided:
+        if i == 'TAA' or i =='TAG' or i =='TGA':
+            break
+        else:
+            rest = rest + i
+    return rest
+
     pass
 
 
@@ -94,6 +120,7 @@ def find_all_ORFs_oneframe(dna):
     ['ATGCATGAATGTAGA', 'ATGTGCCC']
     """
     # TODO: implement this
+
     pass
 
 
@@ -178,3 +205,4 @@ def gene_finder(dna):
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
+    # doctest.run_docstring_examples(rest_of_ORF, globals())
