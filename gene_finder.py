@@ -11,6 +11,8 @@ import random
 from amino_acids import aa, codons, aa_table   # you may find these useful
 from load import load_seq
 
+stop_codons = ['TAA', 'TAG', 'TGA']
+
 
 def shuffle_string(s):
     """Shuffles the characters in the input string
@@ -94,7 +96,7 @@ def rest_of_ORF(dna):
     rest = ''
 
     for i in divided:
-        if i == 'TAA' or i =='TAG' or i =='TGA':
+        if i in stop_codons:
             break
         else:
             rest = rest + i
@@ -117,9 +119,13 @@ def find_all_ORFs_oneframe(dna):
 
     divided = triples(dna)
     orf = []
-    for i in range(len(divided)):
-    	if divided[i] == 'ATG':
-    		orf.append(rest_of_ORF(dna[i*3:]))
+    i = 0
+    while i < len(divided):
+    # for i in range(len(divided)): # I would much rather use a for loop than a while loop...
+	    if divided[i] == 'ATG':
+	    	orf.append(rest_of_ORF(dna[i*3:]))
+	    	i += len(rest_of_ORF(dna))/3
+	    i += 1
     return orf
 
 
@@ -136,7 +142,7 @@ def find_all_ORFs(dna):
     >>> find_all_ORFs("ATGCATGAATGTAG")
     ['ATGCATGAATGTAG', 'ATGAATGTAG', 'ATG']
     """
-    
+
     return find_all_ORFs_oneframe(dna) + find_all_ORFs_oneframe(dna[1:]) + find_all_ORFs_oneframe(dna[2:])
 
 
@@ -149,8 +155,8 @@ def find_all_ORFs_both_strands(dna):
     >>> find_all_ORFs_both_strands("ATGCGAATGTAGCATCAAA")
     ['ATGCGAATG', 'ATGCTACATTCGCAT']
     """
-    # TODO: implement this
-    pass
+    
+    return find_all_ORFs(dna) + find_all_ORFs(get_reverse_complement(dna))
 
 
 def longest_ORF(dna):
@@ -159,7 +165,7 @@ def longest_ORF(dna):
     >>> longest_ORF("ATGCGAATGTAGCATCAAA")
     'ATGCTACATTCGCAT'
     """
-    # TODO: implement this
+    # return find_all_ORFs_both_strands(dna).sort() # HAHA NOPE
     pass
 
 
@@ -203,5 +209,5 @@ def gene_finder(dna):
 
 if __name__ == "__main__":
     import doctest
-    # doctest.testmod()
-    doctest.run_docstring_examples(find_all_ORFs, globals())
+    doctest.testmod()
+    # doctest.run_docstring_examples(find_all_ORFs, globals())
