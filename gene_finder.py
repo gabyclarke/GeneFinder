@@ -111,17 +111,10 @@ def find_all_ORFs_oneframe(dna):
     """
     divided = triples(dna)
     orf = []
-    for i in divided:
-    	if i == 'ATG':
-    		orf.append(rest_of_ORF(dna))
+    for i in range(len(divided)):
+    	if divided[i] == 'ATG':
+    		orf.append(rest_of_ORF(dna[i*3:]))
     return orf
-
-    # orf = []
-    # i = 0
-    # while i < len(dna):
-    #     if dna[i] == 'A' and dna[i+1] == 'T' and dna[i+2] == 'G':
-    #         orf[i] = dna[i:i+3]
-    #         print orf
 
 
 def find_all_ORFs(dna):
@@ -206,3 +199,4 @@ if __name__ == "__main__":
     import doctest
     # doctest.testmod()
     doctest.run_docstring_examples(find_all_ORFs_oneframe, globals())
+    find_all_ORFs_oneframe("ATGCATGAATGTAGATAGATGTGCCC")
