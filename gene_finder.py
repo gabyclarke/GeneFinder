@@ -17,8 +17,6 @@ def shuffle_string(s):
         have to modify this in any way """
     return ''.join(random.sample(s, len(s)))
 
-# YOU WILL START YOUR IMPLEMENTATION FROM HERE DOWN ###
-
 
 def get_complement(nucleotide):
     """ Returns the complementary nucleotide
@@ -30,16 +28,14 @@ def get_complement(nucleotide):
     >>> get_complement('C')
     'G'
     """
-    # TODO: implement this
     if nucleotide == 'A':
         return 'T'
     elif nucleotide == 'T':
         return 'A'
     elif nucleotide == 'C':
         return 'G'
-    else: # G
+    else: # nucleotide == 'G'
         return 'C'
-    pass
 
 
 def get_reverse_complement(dna):
@@ -53,14 +49,12 @@ def get_reverse_complement(dna):
     >>> get_reverse_complement("CCGCGTTCA")
     'TGAACGCGG'
     """
-    # TODO: implement this
     reverse = dna[::-1]
     reverse_complement = ''
 
     for i in reverse:
         reverse_complement = reverse_complement + get_complement(i)
     return reverse_complement
-    pass
 
 
 def triples(dna):
@@ -91,8 +85,6 @@ def rest_of_ORF(dna):
     >>> rest_of_ORF("ATGAGATAGG")
     'ATGAGA'
     """
-    # TODO: implement this
-
     divided = triples(dna)
     rest = ''
 
@@ -102,8 +94,6 @@ def rest_of_ORF(dna):
         else:
             rest = rest + i
     return rest
-
-    pass
 
 
 def find_all_ORFs_oneframe(dna):
@@ -119,15 +109,19 @@ def find_all_ORFs_oneframe(dna):
     >>> find_all_ORFs_oneframe("ATGCATGAATGTAGATAGATGTGCCC")
     ['ATGCATGAATGTAGA', 'ATGTGCCC']
     """
-    # TODO: implement this
-    orf = ''
-    for i in dna:
-        if dna[i] == 'A' and dna[i+1] == 'T' and dna[i+2] == 'G':
-            orf = orf + dna[i]
-            print orf
+    divided = triples(dna)
+    orf = []
+    for i in divided:
+    	if i == 'ATG':
+    		orf.append(rest_of_ORF(dna))
+    return orf
 
-
-    pass
+    # orf = []
+    # i = 0
+    # while i < len(dna):
+    #     if dna[i] == 'A' and dna[i+1] == 'T' and dna[i+2] == 'G':
+    #         orf[i] = dna[i:i+3]
+    #         print orf
 
 
 def find_all_ORFs(dna):
