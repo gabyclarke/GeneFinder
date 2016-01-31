@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-YOUR HEADER COMMENT HERE
+CODE FOR SOFTDES MINI PROJECT 1: GENE FINDER
+SPRING 2015
 
 @author: Gaby Clarke
 
@@ -15,6 +16,7 @@ def shuffle_string(s):
     """Shuffles the characters in the input string
         NOTE: this is a helper function, you do not
         have to modify this in any way """
+
     return ''.join(random.sample(s, len(s)))
 
 
@@ -28,6 +30,7 @@ def get_complement(nucleotide):
     >>> get_complement('C')
     'G'
     """
+
     if nucleotide == 'A':
         return 'T'
     elif nucleotide == 'T':
@@ -49,6 +52,7 @@ def get_reverse_complement(dna):
     >>> get_reverse_complement("CCGCGTTCA")
     'TGAACGCGG'
     """
+
     reverse = dna[::-1]
     reverse_complement = ''
 
@@ -58,10 +62,10 @@ def get_reverse_complement(dna):
 
 
 def triples(dna):
-    """ Takes a DNA sequence and breaks it into triples.
+    """ Takes a DNA sequence and breaks it into strings of 3 characters.
 
         dna: a DNA sequence
-        returns: an array of strings of triples
+        returns: an array of triples
     >>> triples("ATGTGAA")
     ['ATG', 'TGA', 'A']
     >>> triples("ATGAAATGA")
@@ -85,6 +89,7 @@ def rest_of_ORF(dna):
     >>> rest_of_ORF("ATGAGATAGG")
     'ATGAGA'
     """
+
     divided = triples(dna)
     rest = ''
 
@@ -109,6 +114,7 @@ def find_all_ORFs_oneframe(dna):
     >>> find_all_ORFs_oneframe("ATGCATGAATGTAGATAGATGTGCCC")
     ['ATGCATGAATGTAGA', 'ATGTGCCC']
     """
+
     divided = triples(dna)
     orf = []
     for i in range(len(divided)):
@@ -130,8 +136,8 @@ def find_all_ORFs(dna):
     >>> find_all_ORFs("ATGCATGAATGTAG")
     ['ATGCATGAATGTAG', 'ATGAATGTAG', 'ATG']
     """
-    # TODO: implement this
-    pass
+    
+    return find_all_ORFs_oneframe(dna) + find_all_ORFs_oneframe(dna[1:]) + find_all_ORFs_oneframe(dna[2:])
 
 
 def find_all_ORFs_both_strands(dna):
@@ -198,5 +204,4 @@ def gene_finder(dna):
 if __name__ == "__main__":
     import doctest
     # doctest.testmod()
-    doctest.run_docstring_examples(find_all_ORFs_oneframe, globals())
-    find_all_ORFs_oneframe("ATGCATGAATGTAGATAGATGTGCCC")
+    doctest.run_docstring_examples(find_all_ORFs, globals())
