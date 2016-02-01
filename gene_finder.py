@@ -135,7 +135,8 @@ def find_all_ORFs(dna):
     ['ATGCATGAATGTAG', 'ATGAATGTAG', 'ATG']
     """
 
-    return find_all_ORFs_oneframe(dna) + find_all_ORFs_oneframe(dna[1:]) + find_all_ORFs_oneframe(dna[2:])
+    return sum([find_all_ORFs_oneframe(dna[i:]) for i in range(3)], [])
+    # return find_all_ORFs_oneframe(dna) + find_all_ORFs_oneframe(dna[1:]) + find_all_ORFs_oneframe(dna[2:])
 
 
 def find_all_ORFs_both_strands(dna):
@@ -148,7 +149,8 @@ def find_all_ORFs_both_strands(dna):
     ['ATGCGAATG', 'ATGCTACATTCGCAT']
     """
     
-    return find_all_ORFs(dna) + find_all_ORFs(get_reverse_complement(dna))
+    return sum([find_all_ORFs(strand) for strand in [dna, get_reverse_complement(dna)]], [])
+    # return find_all_ORFs(dna) + find_all_ORFs(get_reverse_complement(dna))
 
 
 def longest_ORF(dna):
