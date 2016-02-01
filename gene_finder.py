@@ -15,9 +15,7 @@ stop_codons = ['TAA', 'TAG', 'TGA']
 
 
 def shuffle_string(s):
-    """Shuffles the characters in the input string
-        NOTE: this is a helper function, you do not
-        have to modify this in any way """
+    """Shuffles the characters in the input string"""
 
     return ''.join(random.sample(s, len(s)))
 
@@ -33,8 +31,8 @@ def get_complement(nucleotide):
     'G'
     """
 
-    nucleos = {'A':'T', 'T':'A', 'C':'G', 'G':'C'}
-    return nucleos[nucleotide]
+    nucleotides = {'A':'T', 'T':'A', 'C':'G', 'G':'C'}
+    return nucleotides[nucleotide]
 
 
 def get_reverse_complement(dna):
@@ -57,14 +55,14 @@ def get_reverse_complement(dna):
     return reverse_complement
 
 
-def triples(dna):
-    """ Takes a DNA sequence and breaks it into strings of 3 characters.
+def get_codons(dna):
+    """ Takes a DNA sequence and breaks it into codons.
 
         dna: a DNA sequence
-        returns: an array of triples
-    >>> triples("ATGTGAA")
+        returns: an array of codons
+    >>> get_codons("ATGTGAA")
     ['ATG', 'TGA', 'A']
-    >>> triples("ATGAAATGA")
+    >>> get_codons("ATGAAATGA")
     ['ATG', 'AAA', 'TGA']
     """
 
@@ -86,10 +84,10 @@ def rest_of_ORF(dna):
     'ATGAGA'
     """
 
-    divided = triples(dna)
+    codons = get_codons(dna)
     rest = ''
 
-    for i in divided:
+    for i in codons:
         if i in stop_codons:
             break
         else:
@@ -111,12 +109,12 @@ def find_all_ORFs_oneframe(dna):
     ['ATGCATGAATGTAGA', 'ATGTGCCC']
     """
 
-    divided = triples(dna)
+    codons = get_codons(dna)
     orf = []
     i = 0
-    while i < len(divided):
-    # for i in range(len(divided)): # I would much rather use a for loop than a while loop...
-	    if divided[i] == 'ATG':
+    while i < len(codons):
+    # for i in range(len(codons)): # I would much rather use a for loop than a while loop...
+	    if codons[i] == 'ATG':
 	    	orf.append(rest_of_ORF(dna[i*3:]))
 	    	i += len(rest_of_ORF(dna))/3
 	    i += 1
@@ -159,6 +157,7 @@ def longest_ORF(dna):
     >>> longest_ORF("ATGCGAATGTAGCATCAAA")
     'ATGCTACATTCGCAT'
     """
+    # TODO: implement this
     # return find_all_ORFs_both_strands(dna).sort() # HAHA NOPE
     pass
 
