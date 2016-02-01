@@ -31,8 +31,8 @@ def get_complement(nucleotide):
     'G'
     """
 
-    nucleotides = {'A':'T', 'T':'A', 'C':'G', 'G':'C'}
-    return nucleotides[nucleotide]
+    complements = {'A':'T', 'T':'A', 'C':'G', 'G':'C'}
+    return complements[nucleotide]
 
 
 def get_reverse_complement(dna):
@@ -59,7 +59,7 @@ def get_codons(dna):
     """ Takes a DNA sequence and breaks it into codons.
 
         dna: a DNA sequence
-        returns: an array of codons
+        returns: a list of codons
     >>> get_codons("ATGTGAA")
     ['ATG', 'TGA', 'A']
     >>> get_codons("ATGAAATGA")
