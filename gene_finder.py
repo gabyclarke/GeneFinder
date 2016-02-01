@@ -110,15 +110,15 @@ def find_all_ORFs_oneframe(dna):
     """
 
     codons = get_codons(dna)
-    orf = []
+    ORFs = []
     i = 0
     while i < len(codons):
     # for i in range(len(codons)): # I would much rather use a for loop than a while loop...
 	    if codons[i] == 'ATG':
-	    	orf.append(rest_of_ORF(dna[i*3:]))
+	    	ORFs.append(rest_of_ORF(dna[i*3:]))
 	    	i += len(rest_of_ORF(dna))/3
 	    i += 1
-    return orf
+    return ORFs
 
 
 def find_all_ORFs(dna):
