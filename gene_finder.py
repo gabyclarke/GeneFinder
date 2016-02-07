@@ -201,8 +201,12 @@ def coding_strand_to_AA(dna):
         >>> coding_strand_to_AA("ATGCCCGCTTT")
         'MPA'
     """
-    # TODO: implement this
-    pass
+
+    AAs = ''
+    for i in get_codons(dna):
+        if len(i) == 3:
+            AAs += aa_table[i]
+    return AAs
 
 
 def gene_finder(dna):
