@@ -114,10 +114,10 @@ def find_all_ORFs_oneframe(dna):
     i = 0
     while i < len(codons):
     # for i in range(len(codons)): # I would much rather use a for loop than a while loop...
-	    if codons[i] == 'ATG':
-	    	ORFs.append(rest_of_ORF(dna[i*3:]))
-	    	i += len(rest_of_ORF(dna))/3
-	    i += 1
+        if codons[i] == 'ATG':
+            ORFs.append(rest_of_ORF(dna[i*3:]))
+            i += len(rest_of_ORF(dna))/3
+        i += 1
     return ORFs
 
 
@@ -158,11 +158,16 @@ def longest_ORF(dna):
         as a string
     >>> longest_ORF("ATGCGAATGTAGCATCAAA")
     'ATGCTACATTCGCAT'
+    >>> longest_ORF("ATGTAA")
+    'ATG'
     """
     
-    sorted_ORFs = find_all_ORFs_both_strands(dna)
-    sorted_ORFs.sort(key = len, reverse = True)
-    return sorted_ORFs[0]
+    ORFs = find_all_ORFs_both_strands(dna)
+    if not ORFs:
+        return []
+    else:
+        ORFs.sort(key = len, reverse = True) # sorts by length of string
+        return ORFs[0]
     
 
 
@@ -172,9 +177,14 @@ def longest_ORF_noncoding(dna, num_trials):
 
         dna: a DNA sequence
         num_trials: the number of random shuffles
-        returns: the maximum length longest ORF """
-    # TODO: implement this
-    pass
+        returns: the maximum length longest ORF
+    """
+    
+    lengths = []
+    for i in range(num_trials):
+        shuffled  = shuffle_string(dna)
+        lengths.append(len(longest_ORF(shuffled)))
+    return max(lengths)
 
 
 def coding_strand_to_AA(dna):
@@ -207,5 +217,5 @@ def gene_finder(dna):
 
 if __name__ == "__main__":
     import doctest
-    # doctest.testmod()
-    doctest.run_docstring_examples(longest_ORF, globals())
+    doctest.testmod()
+    # doctest.run_docstring_examples(longest_ORF, globals())
