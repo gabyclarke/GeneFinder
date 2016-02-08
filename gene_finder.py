@@ -235,5 +235,4 @@ if __name__ == "__main__":
     # doctest.testmod()
     # doctest.run_docstring_examples(longest_ORF, globals())
     dna = load_seq("./data/X73525.fa")
-    gene_finder(dna)
-    # print gene_finder(dna)
+    print gene_finder(dna)
