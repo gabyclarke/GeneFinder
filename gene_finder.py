@@ -221,9 +221,10 @@ def gene_finder(dna):
     AAs = []
     threshold = longest_ORF_noncoding(dna, 1500)
     all_ORFs =  find_all_ORFs_both_strands(dna)
-    for i in range(len(all_ORFs)):
-        if len(all_ORFs[i]) > threshold:
-            AAs.append(coding_strand_to_AA(all_ORFs[i]))
+    # for i in range(len(all_ORFs)):
+    #     if len(all_ORFs[i]) > threshold:
+    #         AAs.append(coding_strand_to_AA(all_ORFs[i]))
+    AAs = [coding_strand_to_AA(all_ORFs[i]) for i in range(len(all_ORFs)) if len(all_ORFs[i]) > threshold]
     return AAs
 
 
