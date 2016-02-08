@@ -65,17 +65,21 @@ def extract_next_gene(metagenome_lines, next_line):
                     metagenome_lines[start_line:next_line]]),
             next_line)
 
-
-def load_metagenome():
-    """ Loads a metagenome of a bacterial contig.
+def load_contigs():
+    """ Loads the DNA contigs for a new bacterial communicty
         returns: a list of DNA snippets consisting of (name, sequence)
                  tuples.  The sequence is represented as an uppercase
                  string of nucleotides
     """
-    f = open(path.join('.',
-                       'data',
-                       '3300000497.a_metagenome_phototrophic community.fna'),
-             'r')
+    return load_metagenome_helper('genes segments for software_design_extension.txt')
+
+def load_metagenome_helper(metagenome_file):
+    """ Loads the metagenome stored in the specified file.
+        returns: a list of DNA snippets consisting of (name, sequence)
+                 tuples.  The sequence is represented as an uppercase
+                 string of nucleotides
+    """
+    f = open(path.join('.', 'data', metagenome_file), 'r')
 
     metagenome_lines = f.readlines()
     f.close()
@@ -86,3 +90,12 @@ def load_metagenome():
                                                     next_line)
         snippets.append((label, dna.upper()))
     return snippets
+
+
+def load_metagenome():
+    """ Loads a metagenome of a bacterial contig.
+        returns: a list of DNA snippets consisting of (name, sequence)
+                 tuples.  The sequence is represented as an uppercase
+                 string of nucleotides
+    """
+    return load_metagenome_helper('3300000497.a_metagenome_phototrophic community.fna')
