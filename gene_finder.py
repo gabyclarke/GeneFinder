@@ -9,9 +9,10 @@ SPRING 2015
 
 import random
 from amino_acids import aa, codons, aa_table
-from load import load_seq
+from load import load_seq, load_contigs
 
 stop_codons = ['TAA', 'TAG', 'TGA']
+nucleotides = ['A', 'T', 'C', 'G']
 
 
 def shuffle_string(s):
@@ -32,7 +33,8 @@ def get_complement(nucleotide):
     """
 
     complements = {'A':'T', 'T':'A', 'C':'G', 'G':'C'}
-    return complements[nucleotide]
+    return complements.get(nucleotide, 'A')
+    # return complements[nucleotide]
 
 
 def get_reverse_complement(dna):
@@ -207,7 +209,10 @@ def coding_strand_to_AA(dna):
     AAs = ''
     for i in get_codons(dna):
         if len(i) == 3:
-            AAs += aa_table[i]
+            try:
+                AAs += aa_table[i]
+            except:
+                pass
     return AAs
 
 
@@ -219,7 +224,8 @@ def gene_finder(dna):
     """
 
     # AAs = []
-    threshold = longest_ORF_noncoding(dna, 1500)
+    # threshold = longest_ORF_noncoding(dna, 1500)
+    threshold = 800
     all_ORFs =  find_all_ORFs_both_strands(dna)
     # for i in range(len(all_ORFs)):
     #     if len(all_ORFs[i]) > threshold:
@@ -234,5 +240,9 @@ if __name__ == "__main__":
     # import doctest
     # doctest.testmod()
     # doctest.run_docstring_examples(longest_ORF, globals())
-    dna = load_seq("./data/X73525.fa")
-    print gene_finder(dna)
+    # dna = load_seq("./data/X73525.fa")
+    contigs = load_contigs()
+    six = contigs[6][1]
+
+    # print six
+    print gene_finder(six)
