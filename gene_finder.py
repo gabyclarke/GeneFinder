@@ -8,7 +8,7 @@ SPRING 2015
 """
 
 import random
-from amino_acids import aa, codons, aa_table   # you may find these useful
+from amino_acids import aa, codons, aa_table
 from load import load_seq
 
 stop_codons = ['TAA', 'TAG', 'TGA']
@@ -150,8 +150,8 @@ def find_all_ORFs_both_strands(dna):
     ['ATGCGAATG', 'ATGCTACATTCGCAT']
     """
     
-    return sum([find_all_ORFs(strand) for strand in [dna, get_reverse_complement(dna)]], [])
-    # return find_all_ORFs(dna) + find_all_ORFs(get_reverse_complement(dna))
+    # return sum([find_all_ORFs(strand) for strand in [dna, get_reverse_complement(dna)]], [])
+    return find_all_ORFs(dna) + find_all_ORFs(get_reverse_complement(dna))
 
 
 def longest_ORF(dna):
@@ -181,11 +181,11 @@ def longest_ORF_noncoding(dna, num_trials):
         returns: the maximum length longest ORF
     """
     
-    # lengths = []
-    # for i in range(num_trials):
-    #     shuffled  = shuffle_string(dna)
-    #     lengths.append(len(longest_ORF(shuffled)))
-    lengths = [len(longest_ORF(shuffle_string(dna))) for i in range(num_trials)]
+    lengths = []
+    for i in range(num_trials):
+        shuffled  = shuffle_string(dna)
+        lengths.append(len(longest_ORF(shuffled)))
+    # lengths = [len(longest_ORF(shuffle_string(dna))) for i in range(num_trials)]
     return max(lengths)
 
 
@@ -221,20 +221,19 @@ def gene_finder(dna):
     AAs = []
     threshold = longest_ORF_noncoding(dna, 1500)
     all_ORFs =  find_all_ORFs_both_strands(dna)
-    # for i in range(len(all_ORFs)):
-    #     if len(all_ORFs[i]) > threshold:
-    #         AAs.append(coding_strand_to_AA(all_ORFs[i]))
-    AAs = [coding_strand_to_AA(all_ORFs[i]) for i in range(len(all_ORFs)) if len(all_ORFs[i]) > threshold]
+    for i in range(len(all_ORFs)):
+        if len(all_ORFs[i]) > threshold:
+            AAs.append(coding_strand_to_AA(all_ORFs[i]))
+    # AAs = [coding_strand_to_AA(all_ORFs[i]) for i in range(len(all_ORFs)) if len(all_ORFs[i]) > threshold]
     return AAs
 
 
 
 
 if __name__ == "__main__":
-    import doctest
+    # import doctest
     # doctest.testmod()
     # doctest.run_docstring_examples(longest_ORF, globals())
-    from load import load_seq
     dna = load_seq("./data/X73525.fa")
     gene_finder(dna)
     # print gene_finder(dna)
