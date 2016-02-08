@@ -105,6 +105,7 @@ def find_all_ORFs_oneframe(dna):
 
         dna: a DNA sequence
         returns: a list of non-nested ORFs
+
     >>> find_all_ORFs_oneframe("ATGCATGAATGTAGATAGATGTGCCC")
     ['ATGCATGAATGTAGA', 'ATGTGCCC']
     """
@@ -180,10 +181,11 @@ def longest_ORF_noncoding(dna, num_trials):
         returns: the maximum length longest ORF
     """
     
-    lengths = []
-    for i in range(num_trials):
-        shuffled  = shuffle_string(dna)
-        lengths.append(len(longest_ORF(shuffled)))
+    # lengths = []
+    # for i in range(num_trials):
+    #     shuffled  = shuffle_string(dna)
+    #     lengths.append(len(longest_ORF(shuffled)))
+    lengths = [len(longest_ORF(shuffle_string(dna))) for i in range(num_trials)]
     return max(lengths)
 
 
@@ -215,11 +217,23 @@ def gene_finder(dna):
         dna: a DNA sequence
         returns: a list of all amino acid sequences coded by the sequence dna.
     """
-    # TODO: implement this
-    pass
+
+    AAs = []
+    threshold = longest_ORF_noncoding(dna, 1500)
+    all_ORFs =  find_all_ORFs_both_strands(dna)
+    for i in range(len(all_ORFs)):
+        if len(all_ORFs[i]) > threshold:
+            AAs.append(coding_strand_to_AA(all_ORFs[i]))
+    return AAs
+
+
 
 
 if __name__ == "__main__":
     import doctest
-    doctest.testmod()
+    # doctest.testmod()
     # doctest.run_docstring_examples(longest_ORF, globals())
+    from load import load_seq
+    dna = load_seq("./data/X73525.fa")
+    gene_finder(dna)
+    # print gene_finder(dna)
